@@ -199,7 +199,16 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
     temperatureMesh.geometry.attributes.color.needsUpdate = true // important!
     // requestAnimationFrame(animate);
   }
-  var worker = new Worker('worker.js')
+  var workerFor = new Worker('for.js')
+
+  // listen to message event of worker
+  workerFor.addEventListener('message', function (event) {
+    console.log('message received from workerFor => ', event.data)
+  })
+  // listen to error event of worker
+  workerFor.addEventListener('error', function (event) {
+    console.error('error received from workerFor => ', event)
+  })
 
   d3.csv('./data/monthOfDailyData.csv').then(function (data) {
     // console.log(data[0])
