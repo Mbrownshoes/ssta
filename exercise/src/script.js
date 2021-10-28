@@ -199,25 +199,18 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
     temperatureMesh.geometry.attributes.color.needsUpdate = true // important!
     // requestAnimationFrame(animate);
   }
-  var workerFor = new Worker('for.js')
+//   var workerFor = new Worker('for.js', { type: 'module' })
+  const workerFor = new Worker(new URL('./for.js', import.meta.url));
+
 
   // listen to message event of worker
   workerFor.addEventListener('message', function (event) {
-    console.log('message received from workerFor => ', event.data)
+console.log(event.data[0])
+    // var div = document.getElementById('resolve')
+    // div.innerHTML = 'message received => ' + event.data
   })
   // listen to error event of worker
   workerFor.addEventListener('error', function (event) {
     console.error('error received from workerFor => ', event)
-  })
-
-  d3.csv('./data/monthOfDailyData.csv').then(function (data) {
-    // console.log(data[0])
-
-    // animate through the days
-    // for (let i = 0; i < data.length - positionData.length; i += positionData.length) {
-    //   let endi = i + positionData.length
-    //   let dailyData = data.slice(i, endi)
-    //   let normalized = normalizedAnomalyCalc(dailyData)
-    // }
   })
 })
