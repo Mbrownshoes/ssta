@@ -186,7 +186,7 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
 
   function animateFiles (colorsIn) {
     const count = colorsIn.length
-    const colors = new Float32Array(count * 3)
+    const colors = new Float32Array(count)
     for (let i = 0; i < count; i++) {
       const i3 = i * 3
 
@@ -204,7 +204,24 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
 
   // listen to message event of worker
   workerFor.addEventListener('message', function (event) {
-    animateFiles(event.data)
+
+function waitforme(milisec) {
+    return new Promise(resolve => {
+        setTimeout(() => { resolve('') }, milisec);
+    })
+}
+
+    let colorData = event.data
+    const count = 555976 * 3
+    async function printy() {
+    for (let i = 0; i < colorData.length; i += count) {
+        let dayofData = colorData.slice(i, i + count)
+        await waitforme(100);
+        animateFiles(dayofData)
+    }
+}
+printy()
+
 // console.log(event.data)
     // var div = document.getElementById('resolve')
     // div.innerHTML = 'message received => ' + event.data
