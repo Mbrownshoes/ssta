@@ -44,7 +44,7 @@ d3.csv('./data/monthOfDailyData.csv').then(function (data) {
     const dayofData = data.slice(i, i + count)
 
     const day = makeColors(normalizedAnomalyCalc(dayofData))
-    // postMessage(day)
+    postMessage(day)
   }
 })
 // setTimeout(() => {

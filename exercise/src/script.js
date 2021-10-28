@@ -191,12 +191,12 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
       const i3 = i * 3
 
       // Update colors. Currently not the same point as original
-      temperatureMesh.geometry.attributes.color.array[i3 + 0] = colorsIn[i3 + 0] // Math.random();
-      temperatureMesh.geometry.attributes.color.array[i3 + 1] = colorsIn[i3 + 1]
-      temperatureMesh.geometry.attributes.color.array[i3 + 2] = colorsIn[i3 + 2]
+      particles.geometry.attributes.color.array[i3 + 0] = colorsIn[i3 + 0] // Math.random();
+      particles.geometry.attributes.color.array[i3 + 1] = colorsIn[i3 + 1]
+      particles.geometry.attributes.color.array[i3 + 2] = colorsIn[i3 + 2]
     }
 
-    temperatureMesh.geometry.attributes.color.needsUpdate = true // important!
+    particles.geometry.attributes.color.needsUpdate = true // important!
     // requestAnimationFrame(animate);
   }
   //   var workerFor = new Worker('for.js', { type: 'module' })
@@ -204,7 +204,8 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
 
   // listen to message event of worker
   workerFor.addEventListener('message', function (event) {
-console.log(event.data[0])
+    animateFiles(event.data)
+// console.log(event.data)
     // var div = document.getElementById('resolve')
     // div.innerHTML = 'message received => ' + event.data
   })
