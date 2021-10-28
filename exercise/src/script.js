@@ -200,16 +200,16 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
     // requestAnimationFrame(animate);
   }
   //   var workerFor = new Worker('for.js', { type: 'module' })
-  //   const workerFor = new Worker(new URL('./for.js', import.meta.url));
+    const workerFor = new Worker(new URL('./for.js', import.meta.url));
 
-//   // listen to message event of worker
-//   workerFor.addEventListener('message', function (event) {
-// // console.log(event.data[0])
-//     // var div = document.getElementById('resolve')
-//     // div.innerHTML = 'message received => ' + event.data
-//   })
-//   // listen to error event of worker
-//   workerFor.addEventListener('error', function (event) {
-//     console.error('error received from workerFor => ', event)
-//   })
+  // listen to message event of worker
+  workerFor.addEventListener('message', function (event) {
+console.log(event.data[0])
+    // var div = document.getElementById('resolve')
+    // div.innerHTML = 'message received => ' + event.data
+  })
+  // listen to error event of worker
+  workerFor.addEventListener('error', function (event) {
+    console.error('error received from workerFor => ', event)
+  })
 })
