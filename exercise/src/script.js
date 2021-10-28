@@ -22,7 +22,7 @@ const geometry = new THREE.SphereGeometry(1, 64, 32)
 const material = new THREE.MeshBasicMaterial({ map: earthTexture })
 const sphere = new THREE.Mesh(geometry, material)
 
-// scene.add(sphere)
+scene.add(sphere)
 
 // temperature Mesh
 const minMaxValueToUse = 4
@@ -120,9 +120,9 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
 
   particlesMaterial.vertexColors = true
   const particles = new THREE.Points(particlesGeometry, particlesMaterial)
-  console.log(particles)
+  //   console.log(particles)
   scene.add(particles)
-  scene.add(sphere)
+  //   scene.add(sphere)
 
   scene.position.y = 0.5
 
@@ -199,18 +199,17 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
     temperatureMesh.geometry.attributes.color.needsUpdate = true // important!
     // requestAnimationFrame(animate);
   }
-//   var workerFor = new Worker('for.js', { type: 'module' })
-  const workerFor = new Worker(new URL('./for.js', import.meta.url));
+  //   var workerFor = new Worker('for.js', { type: 'module' })
+  //   const workerFor = new Worker(new URL('./for.js', import.meta.url));
 
-
-  // listen to message event of worker
-  workerFor.addEventListener('message', function (event) {
-console.log(event.data[0])
-    // var div = document.getElementById('resolve')
-    // div.innerHTML = 'message received => ' + event.data
-  })
-  // listen to error event of worker
-  workerFor.addEventListener('error', function (event) {
-    console.error('error received from workerFor => ', event)
-  })
+//   // listen to message event of worker
+//   workerFor.addEventListener('message', function (event) {
+// // console.log(event.data[0])
+//     // var div = document.getElementById('resolve')
+//     // div.innerHTML = 'message received => ' + event.data
+//   })
+//   // listen to error event of worker
+//   workerFor.addEventListener('error', function (event) {
+//     console.error('error received from workerFor => ', event)
+//   })
 })
