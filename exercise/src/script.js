@@ -182,6 +182,21 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
   }
 
   tick()
+
+//   function animate() {
+//     // console.log(scene)
+//     scene.rotation.y += 0.04;
+//     requestAnimationFrame(animate);
+//     renderer.render(scene, camera);
+//     // labelRenderer.render(scene, camera);
+//   }
+//   function animate() {
+//     // resize();
+//     scene.rotation.y += 0.005;
+//     renderer.render(scene, camera);
+//     requestAnimationFrame(animate);
+//   }
+//   animate()
   // all the rest of the data
 
   function animateFiles (colorsIn) {
@@ -199,35 +214,128 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
     particles.geometry.attributes.color.needsUpdate = true // important!
     // requestAnimationFrame(animate);
   }
-  //   var workerFor = new Worker('for.js', { type: 'module' })
-    const workerFor = new Worker(new URL('./for.js', import.meta.url));
 
-  // listen to message event of worker
-  workerFor.addEventListener('message', function (event) {
-
-function waitforme(milisec) {
+  function delay(milisec) {
     return new Promise(resolve => {
         setTimeout(() => { resolve('') }, milisec);
     })
 }
 
-    let colorData = event.data
-    const count = 555976 * 3
-    async function printy() {
-    for (let i = 0; i < colorData.length; i += count) {
-        let dayofData = colorData.slice(i, i + count)
-        await waitforme(100);
-        animateFiles(dayofData)
-    }
-}
-printy()
+
+  //   var workerFor = new Worker('for.js', { type: 'module' })
+//     const workerFor = new Worker(new URL('./for.js', import.meta.url));
+//     workerFor.postMessage('./data/DailyData201501.dat');
+// //   // listen to message event of worker
+//     workerFor.addEventListener('message', function (event) {
 
 // console.log(event.data)
-    // var div = document.getElementById('resolve')
-    // div.innerHTML = 'message received => ' + event.data
-  })
-  // listen to error event of worker
-  workerFor.addEventListener('error', function (event) {
-    console.error('error received from workerFor => ', event)
-  })
+
+//   })
+
+
+//   const workerFor2 = new Worker(new URL('./for.js', import.meta.url));
+//   workerFor2.postMessage('./data/DailyData201502.dat');
+// //   // listen to message event of worker
+// workerFor2.addEventListener('message', function (event) {
+
+// console.log(event.data)
+
+// })
+
+
+
+
+// const workerFor3 = new Worker(new URL('./for.js', import.meta.url));
+// workerFor3.postMessage('./data/DailyData201501.dat');
+// //   // listen to message event of worker
+// workerFor3.addEventListener('message', function (event) {
+
+// console.log(event.data)
+
+// })
+
+// // // second worker
+// const workerFor4 = new Worker(new URL('./for.js', import.meta.url));
+// workerFor4.postMessage('./data/DailyData201502.dat');
+// // listen to message event of worker
+// workerFor4.addEventListener('message', function (event) {
+
+
+// console.log("hi there")
+
+// })
+
+// concatinate returned arrays
+function Float32Concat(first, second)
+{
+    var firstLength = first.length,
+        result = new Float32Array(firstLength + second.length);
+
+    result.set(first);
+    result.set(second, firstLength);
+
+    return result;z
+}
+
+function createWorker(data) {
+    return new Promise(function(resolve, reject) {
+        var v = new Worker(new URL('./for.js', import.meta.url));
+        v.postMessage(data);
+        v.onmessage = function(event){
+        
+            resolve(event.data);
+        };
+ 
+        v.onerror = reject; // Rejects the promise if an error is raised by the web worker, passing along the ErrorEvent
+      
+    });
+}
+
+let files = ['./data/DailyData201501.dat','./data/DailyData201502.dat','./data/DailyData201503.dat']
+var promises = [];
+for(var i = 0; i < files.length; i++) {
+    promises.push(createWorker(files[i]));
+}
+
+// runs the animation
+async function printy(colorData) {
+      // Rotation
+ 
+  
+    // console.log('tick')
+    const count = 555976 * 3 //size of each grid
+    for (let i = 0; i < colorData.length; i += count) {
+        let dayofData = colorData.slice(i, i + count)
+        await delay(100);
+        animateFiles(dayofData)
+        
+    }
+
+
+}
+Promise.all(promises)
+    .then(function(data) {
+        // console.log(data[0])
+        let colorData = Float32Concat(data[0],data[1])
+         colorData = Float32Concat(colorData,data[2])
+        //  colorData = Float32Concat(colorData,data[3])
+        // console.log(colorData)
+        // 
+        // for(j = 0; j < data.length; j++){
+            // printy(data[0])
+        // }
+
+        // animate();
+
+printy(colorData)
+// test additional web workers
+
+
+    })
+    .catch(function(error) {
+        // something went wrong
+    });
+
+
+
 })
