@@ -1,16 +1,17 @@
 import * as d3 from 'd3'
-import fs from 'fs'
+// import fs from 'fs'
 
 const minMaxValueToUse = 4
 const count = 555976 * 3
 // const loadedBuffer = fs.readFileSync('data.dat')
 // const newFloat32Array = new Float32Array(loadedBuffer.buffer)
-
-d3.buffer('./data/data.dat').then(function (data) {
-  console.log(new Float32Array(data).length)
-  postMessage(new Float32Array(data))
-})
-
+onmessage = function (fileToLoad) {
+  console.log(fileToLoad)
+  d3.buffer(fileToLoad.data).then(function (data) {
+    console.log(new Float32Array(data).length)
+    postMessage(new Float32Array(data))
+  })
+}
 // d3.csv('./data/outputfile.csv').then(function (data) {
 // functions
 // function normalizedAnomalyCalc (data) {
