@@ -222,48 +222,6 @@ d3.csv('./data/20150106.csv').then(function (positionData) {
 }
 
 
-  //   var workerFor = new Worker('for.js', { type: 'module' })
-//     const workerFor = new Worker(new URL('./for.js', import.meta.url));
-//     workerFor.postMessage('./data/DailyData201501.dat');
-// //   // listen to message event of worker
-//     workerFor.addEventListener('message', function (event) {
-
-// console.log(event.data)
-
-//   })
-
-
-//   const workerFor2 = new Worker(new URL('./for.js', import.meta.url));
-//   workerFor2.postMessage('./data/DailyData201502.dat');
-// //   // listen to message event of worker
-// workerFor2.addEventListener('message', function (event) {
-
-// console.log(event.data)
-
-// })
-
-
-
-
-// const workerFor3 = new Worker(new URL('./for.js', import.meta.url));
-// workerFor3.postMessage('./data/DailyData201501.dat');
-// //   // listen to message event of worker
-// workerFor3.addEventListener('message', function (event) {
-
-// console.log(event.data)
-
-// })
-
-// // // second worker
-// const workerFor4 = new Worker(new URL('./for.js', import.meta.url));
-// workerFor4.postMessage('./data/DailyData201502.dat');
-// // listen to message event of worker
-// workerFor4.addEventListener('message', function (event) {
-
-
-// console.log("hi there")
-
-// })
 
 // concatinate returned arrays
 function Float32Concat(first, second)
