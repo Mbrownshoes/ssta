@@ -6,9 +6,9 @@ const count = 555976 * 3
 // const loadedBuffer = fs.readFileSync('data.dat')
 // const newFloat32Array = new Float32Array(loadedBuffer.buffer)
 onmessage = function (fileToLoad) {
-  console.log(fileToLoad)
-  d3.buffer(fileToLoad.data).then(function (data) {
-    console.log(new Float32Array(data).length)
+  // console.log(fileToLoad)
+  d3.csv(fileToLoad.data).then(function (data) {
+    console.log(data)
     postMessage(new Float32Array(data))
   })
 }

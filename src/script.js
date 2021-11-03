@@ -249,10 +249,17 @@ function createWorker(data) {
     });
 }
 
-let files = ['./data/DailyData201501.dat','./data/DailyData201502.dat','./data/DailyData201503.dat']
-var promises = [];
-for(var i = 0; i < files.length; i++) {
-    promises.push(createWorker(files[i]));
+// let files = ['./data/DailyData201501.dat','./data/DailyData201502.dat','./data/DailyData201503.dat']
+const dates = Array.from({length: 39}, (_, i) => {
+  const date = new Date(2015, 0, 1);
+  date.setDate(i + 1);
+  return date;
+})
+
+
+let promises = [];
+for(let i = 0; i < 10; i++) {
+    promises.push(createWorker('./data/'+ dates[i].toISOString().slice(0, 10).replaceAll('-','')+ '.csv'));
 }
 
 // runs the animation
