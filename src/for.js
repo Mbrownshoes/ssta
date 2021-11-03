@@ -6,11 +6,15 @@ const count = 555976 * 3
 // const loadedBuffer = fs.readFileSync('data.dat')
 // const newFloat32Array = new Float32Array(loadedBuffer.buffer)
 onmessage = function (fileToLoad) {
-  // console.log(fileToLoad)
-  d3.csv(fileToLoad.data).then(function (data) {
-    console.log(data)
+  // console.log(fileToLoad.data)
+  d3.buffer(fileToLoad.data).then(function (data) {
+    console.log(new Float32Array(data).length)
     postMessage(new Float32Array(data))
   })
+  // d3.csv(fileToLoad.data).then(function (data) {
+  //   // console.log(new Float32Array(data.map(d => d.sst)))
+  //   postMessage(new Float32Array(data.map(d => d.sst)))
+  // })
 }
 // d3.csv('./data/outputfile.csv').then(function (data) {
 // functions

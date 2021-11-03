@@ -77,8 +77,12 @@ function latLongToVector3 (lat, lon, radius, heigth) {
 }
 
 // load initial file
-d3.csv('./data/20150106.csv').then(function (positionData) {
+d3.csv('./20150106.csv').then(function (positionData) {
   //   const PositionData = await d3.csv("./data/20150106.csv");
+
+  // d3.csv('./data/20150101.csv').then(function (data) {
+  //   console.log(data)
+  // })
   //   console.log(PositionData)
 
   const normalizedData = normalizedAnomalyCalc(positionData)
@@ -250,16 +254,16 @@ function createWorker(data) {
 }
 
 // let files = ['./data/DailyData201501.dat','./data/DailyData201502.dat','./data/DailyData201503.dat']
-const dates = Array.from({length: 39}, (_, i) => {
-  const date = new Date(2015, 0, 1);
+const dates = Array.from({length: 30}, (_, i) => {
+  const date = new Date(2015, 2, 1);
   date.setDate(i + 1);
   return date;
 })
 
 
 let promises = [];
-for(let i = 0; i < 10; i++) {
-    promises.push(createWorker('./data/'+ dates[i].toISOString().slice(0, 10).replaceAll('-','')+ '.csv'));
+for(let i = 0; i < dates.length; i++) {
+    promises.push(createWorker('./data/'+ dates[i].toISOString().slice(0, 10).replaceAll('-','')+ '.dat'));
 }
 
 // runs the animation
@@ -272,6 +276,7 @@ async function printy(colorData) {
     for (let i = 0; i < colorData.length; i += count) {
         let dayofData = colorData.slice(i, i + count)
         await delay(100);
+        // console.log('tick')
         animateFiles(dayofData)
         
     }
@@ -280,11 +285,17 @@ async function printy(colorData) {
 }
 Promise.all(promises)
     .then(function(data) {
-        // console.log(data[0])
-        let colorData = Float32Concat(data[0],data[1])
-         colorData = Float32Concat(colorData,data[2])
+      let colorData = null
+        // console.log(data)
+        for(let i = 0; i < data.length; i++){
+          colorData =  i === 0 ? data[i] : Float32Concat(colorData,data[i])
+        }
+        // let c = new Float32Array(data.length * 555976 * 3);
+
+        // let colorData = Float32Concat(data[0],data[1])
+        //  colorData = Float32Concat(colorData,data[2])
         //  colorData = Float32Concat(colorData,data[3])
-        // console.log(colorData)
+        // console.log(colorData.length)
         // 
         // for(j = 0; j < data.length; j++){
             // printy(data[0])
