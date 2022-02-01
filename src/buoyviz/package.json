@@ -1,0 +1,14 @@
+{
+  "name": "0b936d79280ee3bd",
+  "main": "0b936d79280ee3bd@2864.js",
+  "version": "2864.0.0",
+  "homepage": "https://observablehq.com/d/0b936d79280ee3bd",
+  "author": {
+    "name": "Mathew Brown",
+    "url": "https://observablehq.com/@mbrownshoes"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
